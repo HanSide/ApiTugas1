@@ -1,13 +1,11 @@
 package com.example.testingapi;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,23 +16,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class PremierLeague extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+    RecyclerView rvpremierleague;
     TeamAdapter teamAdapter;
     List<Team> teamList = new ArrayList<>();
+    ProgressBar pbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_premier_league);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rvpremierleague = findViewById(R.id.rvpremierleague);
+        rvpremierleague.setLayoutManager(new LinearLayoutManager(this));
 
         teamAdapter = new TeamAdapter(teamList);
-        recyclerView.setAdapter(teamAdapter);
+        rvpremierleague.setAdapter(teamAdapter);
 
+        pbLoading = findViewById(R.id.pbLoading);
         getTeamData();
     }
 
@@ -49,12 +49,14 @@ public class MainActivity extends AppCompatActivity {
                     teamList.clear();
                     teamList.addAll(response.body().teams);
                     teamAdapter.notifyDataSetChanged();
+                    rvpremierleague.setVisibility(View.VISIBLE);
                 }
+                pbLoading.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<TeamResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PremierLeague.this, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
