@@ -15,13 +15,21 @@
         android:theme="@style/Theme.TestingApi"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".LaligaLeague"
+            android:exported="false" />
+        <activity
+            android:name=".MenuUtama"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".PremierLeague"
+            android:exported="false">
+
         </activity>
     </application>
 
